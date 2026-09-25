@@ -288,7 +288,12 @@ private Stmt breakStatement() {
 //< Control Flow while-statement
 //> Statements and State parse-expression-statement
   private Stmt expressionStatement() {
+    
     Expr expr = expression();
+    if (isAtEnd()){
+      return new Stmt.Print(expr);
+    }
+    
     consume(SEMICOLON, "Expect ';' after expression.");
     return new Stmt.Expression(expr);
   }
@@ -629,7 +634,7 @@ private Expr conditional() {
   }
 //< advance
 //> utils
-  private boolean isAtEnd() {
+  boolean isAtEnd() {
     return peek().type == EOF;
   }
 
